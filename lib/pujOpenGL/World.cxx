@@ -147,6 +147,7 @@ Start( )
   // Mouse related
   glutPassiveMotionFunc( Self::_CB_MousePassiveMotion );
   glutEntryFunc( Self::_CB_Entry );
+  glutMouseFunc( Self::_CB_MouseFunc);
 
   /* TODO
      glutMouseFunc(func)
@@ -278,6 +279,22 @@ _cb_entry( int state )
 
 }
 
+// ------------------------------------------------------------------------
+void pujOpenGL::World::
+_cb_mouse_func( int button, int state, int x, int y ){
+  const char* btn =
+    ( button == GLUT_LEFT_BUTTON )   ? "LEFT" :
+    ( button == GLUT_MIDDLE_BUTTON ) ? "MIDDLE" :
+    ( button == GLUT_RIGHT_BUTTON )  ? "RIGHT" : "?";
+  const char* acc = ( state == GLUT_DOWN ) ? "oprimio" : "solto";
+  std::cout << "[MOUSE] " << acc << " " << btn << " en " << x << " " << y << std::endl;
+  if( this->Camera.first != nullptr )
+  {
+    this->Camera.first->MouseEvent( x, y ); /
+    glutPostRedisplay( );
+  }
+}
+
 // -------------------------------------------------------------------------
 void pujOpenGL::World::
 _CB_Display( )
@@ -373,5 +390,13 @@ _CB_Entry( int state )
 {
   if (Self::Get( ) != nullptr)
     Self::Get()->_cb_entry( state );
+}
+
+// ------------------------------------------------------------------------
+void pujOpenGL::World::
+_CB_MouseFunc( int button, int state, int x, int y)
+{
+  if (Self::Get( ) != nullptr)
+    Self::Get()->_cb_mouse_func( button, state, x, y );
 }
 // eof - World.cxx
