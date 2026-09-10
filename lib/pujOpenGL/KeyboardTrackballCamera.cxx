@@ -9,6 +9,7 @@
 
 #include <pujOpenGL/KeyboardTrackballCamera.h>
 
+#include <iostream>
 #include <cmath>
 #include <cstdlib>
 #include <GL/gl.h>
@@ -41,7 +42,7 @@ KeyEvent( int k, int x, int y, bool special, bool up )
 {
   static const float _dA = std::atan( float( 1 ) ) / float( 45 );
   static float _oA = 1;
-
+  std::cout << "mouse coord " << x << " " << y << std::endl;
   // TODO: std::cout << special << " " << up << " " << k << std::endl;
   if( special && k == 100 /*LEFT*/ )
     {
@@ -82,6 +83,19 @@ KeyEvent( int k, int x, int y, bool special, bool up )
     _oA = ( up )? 1: 10;
   else if( !special && k == 27 /*ESC*/ )
     std::exit( EXIT_SUCCESS );
+}
+
+void pujOpenGL::KeyboardTrackballCamera::
+MouseEvent( int x, int y )
+{
+  static const float _dA = std::atan( float( 1 ) ) / float( 45 );
+  static float _oA = 1;
+  std::cout << "mouse coord " << x << " " << y << std::endl;
+  // TODO: std::cout << special << " " << up << " " << k << std::endl;
+  this->Theta += _dA * x;
+  this->_Update( );
+  this->Phi += _dA * y;
+  this->_Update( );
 }
 
 // -------------------------------------------------------------------------

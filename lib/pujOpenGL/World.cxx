@@ -141,6 +141,9 @@ Start( )
   glutKeyboardUpFunc( Self::_CB_KeyboardUp );
   glutSpecialFunc( Self::_CB_SpecialKeyboardDown );
   glutSpecialUpFunc( Self::_CB_SpecialKeyboardUp );
+  //glutEntryFunc( );
+  //glutMouseWheelFunc( );
+  glutPassiveMotionFunc( Self::_CB_MousePassiveMotion );
 
   /* TODO
      glutMouseFunc(func)
@@ -252,6 +255,18 @@ _cb_keyboard( int k, int x, int y, bool special, bool up )
   } // end if
 }
 
+
+// -------------------------------------------------------------------------
+void pujOpenGL::World::
+_cb_mousepm( int x, int y ) 
+{
+ if( this->Camera.first != nullptr )
+ {
+   this->Camera.first->MouseEvent( x, y );
+   glutPostRedisplay( );
+ } // end if
+}
+
 // -------------------------------------------------------------------------
 void pujOpenGL::World::
 _CB_Display( )
@@ -332,5 +347,11 @@ _CB_SpecialKeyboardUp( int k, int x, int y )
   if( Self::Get( ) != nullptr )
     Self::Get( )->_cb_keyboard( k, x, y, true, true );
 }
-
+// -------------------------------------------------------------------------
+void pujOpenGL::World::
+_CB_MousePassiveMotion( int x, int y ) 
+{
+  if( Self::Get( ) != nullptr )
+    Self::Get( )->_cb_mousepm( x, y );
+}
 // eof - World.cxx

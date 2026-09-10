@@ -61,6 +61,7 @@ namespace pujOpenGL
     void _cb_close( );
     void _cb_idle( );
     void _cb_keyboard( int k, int x, int y, bool special, bool up );
+    void _cb_mousepm(int x, int y);
 
     static void _CB_Display( );
     static void _CB_Reshape( int w, int h );
@@ -71,7 +72,7 @@ namespace pujOpenGL
     static void _CB_KeyboardUp( unsigned char k, int x, int y );
     static void _CB_SpecialKeyboardDown( int k, int x, int y );
     static void _CB_SpecialKeyboardUp( int k, int x, int y );
-
+    static void _CB_MousePassiveMotion(int x, int y);
   private:
     World( const Self& ) = delete;
     Self& operator=( const Self& ) = delete;
