@@ -2,6 +2,8 @@
 // @author Leonardo Florez-Valencia (florez-l@javeriana.edu.co)
 // =========================================================================
 
+#include <iostream>
+
 #include <pujOpenGL/World.h>
 
 #include <GL/gl.h>
@@ -141,9 +143,10 @@ Start( )
   glutKeyboardUpFunc( Self::_CB_KeyboardUp );
   glutSpecialFunc( Self::_CB_SpecialKeyboardDown );
   glutSpecialUpFunc( Self::_CB_SpecialKeyboardUp );
-  //glutEntryFunc( );
-  //glutMouseWheelFunc( );
+
+  // Mouse related
   glutPassiveMotionFunc( Self::_CB_MousePassiveMotion );
+  glutEntryFunc( Self::_CB_Entry );
 
   /* TODO
      glutMouseFunc(func)
@@ -255,7 +258,6 @@ _cb_keyboard( int k, int x, int y, bool special, bool up )
   } // end if
 }
 
-
 // -------------------------------------------------------------------------
 void pujOpenGL::World::
 _cb_mousepm( int x, int y ) 
@@ -265,6 +267,15 @@ _cb_mousepm( int x, int y )
    this->Camera.first->MouseEvent( x, y );
    glutPostRedisplay( );
  } // end if
+}
+
+// ------------------------------------------------------------------------
+void pujOpenGL::World::
+_cb_entry( int state )
+{
+  const char* message = state == GLUT_ENTERED ? "entering window" : "leaving window";
+  std:: cout << "[ENTRY_CALLBACK]:" << message << std::endl;  
+
 }
 
 // -------------------------------------------------------------------------
@@ -347,11 +358,20 @@ _CB_SpecialKeyboardUp( int k, int x, int y )
   if( Self::Get( ) != nullptr )
     Self::Get( )->_cb_keyboard( k, x, y, true, true );
 }
+
 // -------------------------------------------------------------------------
 void pujOpenGL::World::
 _CB_MousePassiveMotion( int x, int y ) 
 {
   if( Self::Get( ) != nullptr )
     Self::Get( )->_cb_mousepm( x, y );
+}
+
+// --------------------------------------------------------------------------
+void pujOpenGL::World::
+_CB_Entry( int state )
+{
+  if (Self::Get( ) != nullptr)
+    Self::Get()->_cb_entry( state );
 }
 // eof - World.cxx
