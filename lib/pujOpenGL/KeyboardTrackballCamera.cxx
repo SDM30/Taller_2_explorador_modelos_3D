@@ -91,11 +91,24 @@ MouseEvent( int x, int y )
   static const float _dA = std::atan( float( 1 ) ) / float( 45 );
   static float _oA = 1;
   std::cout << "mouse coord " << x << " " << y << std::endl;
-  // TODO: std::cout << special << " " << up << " " << k << std::endl;
-  this->Theta += _dA * x;
-  this->_Update( );
-  this->Phi += _dA * y;
-  this->_Update( );
+  
+  last_x = x;
+  if ( (this->last_x - x) > 0) {
+   this->Theta +=  _dA * x * 0.005;
+   this->_Update( );
+  } else {
+   this->Theta -=  _dA * x * 0.005;
+   this->_Update( );
+  }
+
+  if ( (this->last_y - y) > 0) {
+   this->Phi -=  _dA * y * 0.005;
+   this->_Update( );
+  } else {
+   this->Phi +=  _dA * y * 0.005;
+   this->_Update( );
+  }
+  last_y = y;
 }
 
 // -------------------------------------------------------------------------

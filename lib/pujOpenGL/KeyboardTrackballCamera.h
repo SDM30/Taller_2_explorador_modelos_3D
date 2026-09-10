@@ -33,6 +33,9 @@ namespace pujOpenGL
     virtual void _Update( );
 
   protected:
+
+    float last_x {0};
+    float last_y {0};
     float Phi         { 0 };
     float Theta       { 0 };
     float Radius      { 0 };
