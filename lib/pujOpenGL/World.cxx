@@ -290,7 +290,7 @@ _cb_mouse_func( int button, int state, int x, int y ){
   std::cout << "[MOUSE] " << acc << " " << btn << " en " << x << " " << y << std::endl;
   if( this->Camera.first != nullptr )
   {
-    this->Camera.first->MouseEvent( x, y ); /
+    this->Camera.first->MouseEvent( x, y );
     glutPostRedisplay( );
   }
 }

@@ -6,7 +6,8 @@
 #include <iostream>
 #include <string>
 
-#include <pujOpenGL/KeyboardTrackballCamera.h>
+//#include <pujOpenGL/KeyboardTrackballCamera.h>
+#include <pujOpenGL/MouseTrackballCamera.h>
 #include <pujOpenGL/WavefrontOBJ.h>
 #include <pujOpenGL/World.h>
 
@@ -27,7 +28,8 @@ int main( int argc, char** argv )
   world->AddNode( mesh );
 
   // Camera
-  pujOpenGL::KeyboardTrackballCamera camera;
+  pujOpenGL::MouseTrackballCamera camera;
+  //pujOpenGL::KeyboardTrackballCamera camera;
   camera.InitializeFromBoundingBox( );
   world->SetCamera( camera );
 
