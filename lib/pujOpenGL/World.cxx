@@ -145,10 +145,9 @@ Start( )
   glutSpecialUpFunc( Self::_CB_SpecialKeyboardUp );
 
   // Mouse related
-  glutPassiveMotionFunc( Self::_CB_MousePassiveMotion );
   glutEntryFunc( Self::_CB_Entry );
-  glutMouseFunc( Self::_CB_MouseFunc);
-
+  glutMouseFunc( Self::_CB_MousePressed );
+  glutMotionFunc( Self::_CB_MouseMotion );
   /* TODO
      glutMouseFunc(func)
      glutMotionFunc(func)
@@ -261,11 +260,22 @@ _cb_keyboard( int k, int x, int y, bool special, bool up )
 
 // -------------------------------------------------------------------------
 void pujOpenGL::World::
-_cb_mousepm( int x, int y ) 
+_cb_mousepressed( int button, int state, int x, int y ) 
 {
  if( this->Camera.first != nullptr )
  {
-   this->Camera.first->MouseEvent( x, y );
+   this->Camera.first->MouseButtonEvent( button, state, x, y );
+   glutPostRedisplay( );
+ } // end if
+}
+
+// -------------------------------------------------------------------------
+void pujOpenGL::World::
+_cb_mousemotion( int x, int y ) 
+{
+ if( this->Camera.first != nullptr )
+ {
+   this->Camera.first->MouseMotionEvent( x, y );
    glutPostRedisplay( );
  } // end if
 }
@@ -282,6 +292,7 @@ _cb_entry( int state )
 // ------------------------------------------------------------------------
 void pujOpenGL::World::
 _cb_mouse_func( int button, int state, int x, int y ){
+/*
   const char* btn =
     ( button == GLUT_LEFT_BUTTON )   ? "LEFT" :
     ( button == GLUT_MIDDLE_BUTTON ) ? "MIDDLE" :
@@ -293,6 +304,7 @@ _cb_mouse_func( int button, int state, int x, int y ){
     this->Camera.first->MouseEvent( x, y );
     glutPostRedisplay( );
   }
+*/
 }
 
 // -------------------------------------------------------------------------
@@ -378,10 +390,17 @@ _CB_SpecialKeyboardUp( int k, int x, int y )
 
 // -------------------------------------------------------------------------
 void pujOpenGL::World::
-_CB_MousePassiveMotion( int x, int y ) 
+_CB_MousePressed( int button, int state, int x, int y ) 
 {
   if( Self::Get( ) != nullptr )
-    Self::Get( )->_cb_mousepm( x, y );
+    Self::Get( )->_cb_mousepressed( button, state, x, y );
+}
+// -------------------------------------------------------------------------
+void pujOpenGL::World::
+_CB_MouseMotion( int x, int y ) 
+{
+  if( Self::Get( ) != nullptr )
+    Self::Get( )->_cb_mousemotion( x, y );
 }
 
 // --------------------------------------------------------------------------

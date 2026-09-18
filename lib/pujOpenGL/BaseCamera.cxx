@@ -101,7 +101,14 @@ KeyEvent( int k, int x, int y, bool special, bool up )
 
 // -------------------------------------------------------------------------
 void  pujOpenGL::BaseCamera::
-MouseEvent( int x, int y )
+MouseButtonEvent(int button, int state, int x, int y)
+{
+  // Do nothing
+}
+
+// -------------------------------------------------------------------------
+void  pujOpenGL::BaseCamera::
+MouseMotionEvent( int x, int y) 
 {
   // Do nothing
 }

@@ -13,22 +13,29 @@ namespace pujOpenGL {
     MouseTrackballCamera();
     virtual ~MouseTrackballCamera();
 
-    //virtual void ConfigureFromBounds(const float* b) override;
-    virtual void MouseEvent(int x, int y) override;
-    //virtual void Draw( ) const override;
-
-  //protected:
-  //  virtual void _Reset( );
-  //  virtual void _Update( );
+    virtual void ConfigureFromBounds(const float* b) override;
+    virtual void MouseButtonEvent(int button, int state, int x, int y) override;
+    virtual void MouseMotionEvent( int x, int y) override;
+    virtual void Draw( ) const override;
 
   protected:
-    float pitch = 0;
-    float yaw = 0;
+    virtual void _Reset( );
+    virtual void _Update( );
+
+  protected:
+    float pitch {0};
+    float yaw   {0};
     
-    float lastX = 0;
-    float lastY = 0;
+    float lastX {0};
+    float lastY {0};
+    float Phi         { 0 };
+    float Theta       { 0 };
+    float Radius      { 0 };
+    float DeltaRadius { 0 };
+    float OffRadius   { 0 };
     bool neverEnteredMouse = true;
-    
+    bool leftPressed = false;
+
     std::array< float, 16 > Transform
       {
 	1, 0, 0, 0,
