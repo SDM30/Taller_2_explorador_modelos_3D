@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 
-#include <pujOpenGL/KeyboardTrackballCamera.h>
+//#include <pujOpenGL/KeyboardTrackballCamera.h>
 #include <pujOpenGL/MouseTrackballCamera.h>
 #include <pujOpenGL/WavefrontOBJ.h>
 #include <pujOpenGL/World.h>

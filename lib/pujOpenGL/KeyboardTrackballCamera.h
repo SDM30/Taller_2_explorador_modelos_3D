@@ -25,7 +25,6 @@ namespace pujOpenGL
     virtual void KeyEvent(
       int k, int x, int y, bool special, bool up
       ) override;
-    virtual void MouseEvent( int x, int y ) override;
     virtual void Draw( ) const override;
 
   protected:
