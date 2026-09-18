@@ -116,6 +116,7 @@ void pujOpenGL::KeyboardTrackballCamera::
 Draw( ) const
 {
   glMultMatrixf( this->Transform.data( ) );
+  std::cout << "on draw within keyboard camera" << std::endl;
 }
 
 // -------------------------------------------------------------------------

@@ -7,6 +7,8 @@
 #include <cmath>
 #include <GL/glu.h>
 
+#include <iostream>
+
 // -------------------------------------------------------------------------
 pujOpenGL::BaseCamera::
 BaseCamera( )
