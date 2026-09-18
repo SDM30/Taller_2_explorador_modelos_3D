@@ -68,19 +68,21 @@ MouseMotionEvent( int x, int y )
   float diffx = this->lastX - x;
   float diffy = this->lastY - y;
   float sens = 0.005;  
-
-  if (diffx != 0) 
-  { 
-    this->Theta = -diffx * sens; 
-    this->_Update( ); 
+  if (leftPressed)
+  {
+    if (diffx != 0) 
+    { 
+      this->Theta = -diffx * sens; 
+      this->_Update( ); 
+    }
+    if (diffy != 0) 
+    { 
+      this->Phi   = -diffy * sens; 
+      this->_Update( ); 
+    }
+    this->lastX = x;
+    this->lastY = y;
   }
-  if (diffy != 0) 
-  { 
-    this->Phi   = -diffy * sens; 
-    this->_Update( ); 
-  }
-  this->lastX = x;
-  this->lastY = y;
 }
 
 // -------------------------------------------------------------------------
