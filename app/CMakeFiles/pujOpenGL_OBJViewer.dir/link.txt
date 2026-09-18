@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/pujOpenGL_OBJViewer.dir/OBJViewer.cxx.o -o ../pujOpenGL_OBJViewer  -Wl,-rpath,/home/estudiante/Developer/Taller_2_explorador_modelos_3D ../libpujOpenGL.so /usr/lib/x86_64-linux-gnu/libGLU.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libglut.so 

@@ -1,0 +1,142 @@
+@startuml
+title Diagrama de clases - lib.pujOpenGL (vista lógica)
+
+package lib.pujOpenGL {
+  abstract class Node {
+    #array< float, 6 > BoundingBox
+    #float LongestDiagonal
+
+    +array< float, 6 > GetBoundingBox( )
+    +array< float, 6 > GetCompleteBoundingBox( )
+    +float GetLongestDiagonal( )
+    +void Draw( ) {abstract}
+  }
+
+  class BaseCamera {
+    #array< float, 3 > Eye
+    #array< float, 3 > LookAt
+    #array< float, 3 > Up
+    #float Fovy
+    #array< float, 2 > ZBounds
+    #bool InitializeFromBoundingBoxFlag
+
+    +BaseCamera( )
+    +void InitializeFromBoundingBox( )
+    +void ConfigureFromBounds( float* b )
+    +void Perspective( int ancho, int alto )
+    +void KeyEvent( int tecla, int x, int y, bool special, bool up )
+    +void Draw( )
+  }
+
+  abstract class VisualObject {
+    #Node [0..*] Children
+    #FTransform ModelingTransform
+    #FTransform LocalizationTransform
+    #FTransform AnimationTransform
+
+    +void SetModelingTransform( FTransform f )
+    +void SetLocalizationTransform( FTransform f )
+    +void SetAnimationTransform( FTransform f )
+    +void AddChild( Node c )
+    +array< float, 6 > GetCompleteBoundingBox( )
+    +void Draw( )
+    #void _SelfDraw( ) {abstract}
+  }
+
+  class Mesh {
+    #array< float, 3 > [0..*] Vertices
+    #int [0..*][0..*] Faces
+    #StrAttribute Normals
+    #StrAttribute TexCoords
+
+    +Mesh( )
+    +void Clear( )
+    #void _SelfDraw( )
+  }
+
+  class WavefrontOBJ {
+    +WavefrontOBJ( string nombreArchivo )
+  }
+
+  class Light {
+    #long long LightId
+    #array< float, 4 > Position
+    #array< float, 4 > Ambient
+    #array< float, 4 > Diffuse
+    #array< float, 4 > Specular
+    #array< float, 3 > SpotDirection
+    #bool IsEnabled
+    #float SpotCutoff
+    #float SpotExponent
+    #float ConstantAtt
+    #float LinearAtt
+    #float QuadraticAtt
+
+    +Light( )
+    +void Configure( )
+    +void SetPosition( float x, float y, float z )
+    +void SetDirectional( float x, float y, float z )
+    +void SetColor( float r, float g, float b, float a )
+    +void SetSpotlight( float dX, float dY, float dZ, float corte )
+    +void SetAttenuation( float c, float l, float q )
+    +void Enable( )
+    +void Disable( )
+    +bool GetEnabled( )
+    #void _SelfDraw( )
+  }
+
+  class KeyboardTrackballCamera {
+    #float Phi
+    #float Theta
+    #float Radius
+    #float DeltaRadius
+    #float OffRadius
+    #array< float, 16 > Transform
+
+    +KeyboardTrackballCamera( )
+    +void ConfigureFromBounds( float* b )
+    +void KeyEvent( int tecla, int x, int y, bool special, bool up )
+    +void Draw( )
+  }
+
+  class World <<Singleton>> {
+    #int WindowId
+    #int Width
+    #int Height
+    #array< float, 4 > ClearColor
+    #array< float, 4 > AmbientLight
+    #BaseCamera [0..1] Camera
+    #Node [0..*] Nodes
+    #bool HasLights
+
+    +World* Get( )
+    +void SetCamera( BaseCamera c )
+    +void AddNode( Node n )
+    +array< float, 6 > GetCompleteBoundingBox( )
+    +void Init( int argc, char** argv, string titulo, int ancho, int alto )
+    +void Start( )
+  }
+}
+
+Node <|-- BaseCamera
+Node <|-- VisualObject
+VisualObject <|-- Mesh
+Mesh <|-- WavefrontOBJ
+VisualObject <|-- Light
+BaseCamera <|-- KeyboardTrackballCamera
+
+VisualObject "1" *-- "0..*" Node : Children
+World "1" *-- "0..1" BaseCamera : Camera
+World "1" *-- "0..*" Node : Nodes
+World ..> Light : configura
+
+note as N1
+  Node: clase base abstracta del grafo de escena
+  (caja de contenimiento y dibujo).
+  VisualObject: nodo con transformaciones e hijos
+  (grafo de escena recursivo).
+  WavefrontOBJ: malla cargada desde archivo .obj.
+  World: motor GLUT, crea la ventana, registra
+  los callbacks y ejecuta el bucle principal.
+end note
+@enduml
