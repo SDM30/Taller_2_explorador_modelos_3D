@@ -31,11 +31,18 @@ MouseButtonEvent( int button, int state, int x, int y )
     this->lastX = x;
     this->lastY = y;
     leftPressed = true;
-  } 
-  else 
-  {
-    leftPressed = false;
-  }
+  } else leftPressed = false;
+
+  if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN){
+    this->lastX = x;
+    this->lastY = y;
+    rightPressed = true;
+  } else rightPressed = false;
+
+  if(button == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN){
+    middlePressed = true;
+    this->_Reset( );
+  } else middlePressed = false;
 
 /*
   static float rad = std::atan(float(1)) / float(45);
@@ -83,6 +90,20 @@ MouseMotionEvent( int x, int y )
     this->lastX = x;
     this->lastY = y;
   }
+
+  float sens_pixel = this->Radius / float( glutGet( GLUT_WINDOW_HEIGHT ) );
+
+  if (rightPressed)
+  {
+    if (diffx != 0 || diffy != 0)
+    {
+      this->TranslationX -= diffx * sens_pixel;
+      this->TranslationY += diffy * sens_pixel;
+      this->_Update( );
+    }
+    this->lastX = x;
+    this->lastY = y;
+  }
 }
 
 // -------------------------------------------------------------------------
@@ -90,7 +111,7 @@ void pujOpenGL::MouseTrackballCamera::
 Draw( ) const
 {
   glMultMatrixf( this->Transform.data( ) );
-  std::cout << "on draw within keyboard camera" << std::endl;
+  /* std::cout << "on draw within keyboard camera" << std::endl; */
 }
 
 // -------------------------------------------------------------------------
@@ -108,6 +129,7 @@ _Reset( )
   this->Radius = std::sqrt( ( x * x ) + ( y * y ) + ( z * z ) );
   this->OffRadius = this->Radius / 100;
   this->DeltaRadius = this->Phi = this->Theta = 0;
+  this->TranslationX = this->TranslationY = 0;
 
   std::fill( T, T + 16, 0 );
   T[ 0 ] = T[ 5 ] = T[ 10 ] = T[ 15 ] = 1;
@@ -161,12 +183,21 @@ _Update( )
       this->Radius += d;
     } // end if
 
+  
+  if( this->TranslationX != 0 ){
+    T[ 12 ] += this->TranslationX;
+  }
+  if( this->TranslationY != 0 ){
+    T[ 13 ] += this->TranslationY;
+  }
+  
   // Ensure homogeneousness
   T[ 3 ] = T[ 7 ] = T[ 11 ] = 0;
   T[ 15 ] = 1;
 
   // Reset angles and delta radius
   this->DeltaRadius = this->Phi = this->Theta = 0;
+  this->TranslationX = this->TranslationY = 0;
 }
 
 // eof - MouseTrackballCamera.cxx

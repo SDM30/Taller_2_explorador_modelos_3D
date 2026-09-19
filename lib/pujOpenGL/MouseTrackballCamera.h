@@ -28,14 +28,18 @@ namespace pujOpenGL {
     
     float lastX {0};
     float lastY {0};
-    float Phi         { 0 };
-    float Theta       { 0 };
+    float TranslationX{0};
+    float TranslationY {0};
+    float Phi         { 0 }; //rotación en X
+    float Theta       { 0 }; //rotación en Y
     float Radius      { 0 };
     float DeltaRadius { 0 };
     float OffRadius   { 0 };
     bool neverEnteredMouse = true;
     bool leftPressed = false;
-
+    bool rightPressed = false;
+    bool middlePressed = false;
+    
     std::array< float, 16 > Transform
       {
 	1, 0, 0, 0,
