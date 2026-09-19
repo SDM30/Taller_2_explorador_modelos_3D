@@ -63,6 +63,7 @@ namespace pujOpenGL
     void _cb_keyboard( int k, int x, int y, bool special, bool up );
     void _cb_mousepressed( int button, int state, int x, int y );
     void _cb_mousemotion( int x, int y );
+    void _cb_passive_mouse_motion( int x, int y );
     void _cb_entry( int state );
     void _cb_mouse_func( int button, int state, int x, int y);
 
@@ -77,6 +78,7 @@ namespace pujOpenGL
     static void _CB_SpecialKeyboardUp( int k, int x, int y );
     static void _CB_MousePressed( int button, int state, int x, int y );
     static void _CB_MouseMotion( int x, int y );
+    static void _CB_PassiveMouseMotion( int x, int y );
     static void _CB_Entry( int state );
     static void _CB_MouseFunc( int button, int state, int x, int y);
 
@@ -95,6 +97,7 @@ namespace pujOpenGL
     std::pair< pujOpenGL::BaseCamera*, bool > Camera { nullptr, true };
     std::vector< std::pair< pujOpenGL::Node*, bool > > Nodes;
     bool HasLights { false };
+    bool MouseEnObjeto { false };
 
   protected:
     struct SingletonDeleter
