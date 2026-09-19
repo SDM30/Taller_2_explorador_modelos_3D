@@ -33,6 +33,7 @@ Clear( )
 }
 
 // -------------------------------------------------------------------------
+// Llena todos los valores del bounding box respecto a los vertices del mesh (máximos y mínimos)
 void pujOpenGL::Mesh::
 _UpdateBoundingBox( )
 {
@@ -73,19 +74,26 @@ _UpdateBoundingBox( )
 }
 
 // -------------------------------------------------------------------------
+//Dibuja el mesh
 void pujOpenGL::Mesh::
 _SelfDraw( ) const
 {
   for( unsigned long fId = 0; fId < this->Faces.size( ); ++fId )
   {
+    // Se obtiene el polígono y las normales
     const std::vector< unsigned long >* f = &( this->Faces[ fId ] );
     const std::vector< unsigned long >* n = nullptr;
     if( this->Normals.Data.size( ) > 0 )
       n = &( this->Normals.Indices[ fId ] );
+
+    // Si el polígono tiene más de 2 vértices, se dibuja un polígono, sino se dibuja un loop
     if( f->size( ) > 2 ) glBegin( GL_POLYGON );
     else                 glBegin( GL_LINE_LOOP );
+
+    // Se dibujan los vértices del polígono
     for( unsigned long vId = 0; vId < f->size( ); ++vId )
     {
+      // Se dibujan las normales del polígono
       if( n != nullptr )
         glNormal3fv( this->Normals.Data.data( ) + ( ( *n )[ vId ] * 3 ) );
       glVertex3fv( this->Vertices.data( ) + ( ( *f )[ vId ] * 3 ) );

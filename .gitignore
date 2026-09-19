@@ -1,1 +1,20 @@
+# CMake / build
 build/
+CMakeCache.txt
+CMakeFiles/
+**/CMakeFiles/
+cmake_install.cmake
+**/cmake_install.cmake
+Makefile
+**/Makefile
+
+# Binarios y objetos
+*.o
+*.o.d
+*.so
+*.a
+pujOpenGL_OBJViewer
+libpujOpenGL.so
+
+# Modelos locales
+3D_object_models/

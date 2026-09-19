@@ -39,13 +39,16 @@ ConfigureFromBounds( const float* b )
     float* e = this->Eye.data( );
     float* u = this->Up.data( );
 
+    // Se calcula el punto medio del bounding box para el lookAt
     l[ 0 ] = ( b[ 1 ] + b[ 0 ] ) * 0.5;
     l[ 1 ] = ( b[ 3 ] + b[ 2 ] ) * 0.5;
     l[ 2 ] = ( b[ 5 ] + b[ 4 ] ) * 0.5;
 
-    e[ 0 ] = ( ( b[ 1 ] - l[ 0 ] ) * 3 ) + l[ 0 ];
-    e[ 1 ] = ( ( b[ 3 ] - l[ 1 ] ) * 3 ) + l[ 1 ];
-    e[ 2 ] = ( ( b[ 5 ] - l[ 2 ] ) * 3 ) + l[ 2 ];
+    // Se calcula la posición de la cámara respecto al lookAt. 
+    // Se toma el lookAt como el punto medio del bounding box y se aleja 3 veces la distancia entre el lookAt y el bounding box.
+    e[ 0 ] = ( ( b[ 1 ] - l[ 0 ] ) * 6 ) + l[ 0 ];
+    e[ 1 ] = ( ( b[ 3 ] - l[ 1 ] ) * 6  ) + l[ 1 ];
+    e[ 2 ] = ( ( b[ 5 ] - l[ 2 ] ) * 3  ) + l[ 2 ];
 
     float x = l[ 0 ] - e[ 0 ];
     float y = l[ 1 ] - e[ 1 ];
