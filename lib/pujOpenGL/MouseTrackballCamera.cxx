@@ -1,6 +1,7 @@
 #include <pujOpenGL/MouseTrackballCamera.h> 
 #include <iostream>
 #include <cmath>
+#include <numbers>
 #include <cstdlib>
 #include <GL/gl.h>
 #include <GL/glut.h>
@@ -91,7 +92,12 @@ MouseMotionEvent( int x, int y )
     this->lastY = y;
   }
 
-  float sens_pixel = this->Radius / float( glutGet( GLUT_WINDOW_HEIGHT ) );
+  // float sens_pixel = this->Radius / float( glutGet( GLUT_WINDOW_HEIGHT ) );
+  // Se calcula la sensibilidad de la traslación en función de la altura de la ventana y el ángulo de visión
+  // Esto para sacar una correspondencia entre el movimiento del mouse (en pixeles) y el movimiento del objeto (en unidades del mundo)
+  float fovy = this->Fovy * std::numbers::pi / 180.0f;
+  float worldHeight = 2.0f * this->Radius * std::tan( fovy * 0.5f );
+  float sens_pixel = worldHeight / float( glutGet( GLUT_WINDOW_HEIGHT ) );
 
   if (rightPressed)
   {
