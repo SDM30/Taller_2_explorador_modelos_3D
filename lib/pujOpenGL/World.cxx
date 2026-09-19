@@ -208,7 +208,6 @@ _cb_display( )
 
   if( this->Camera.first != nullptr )
     this->Camera.first->Draw( );
-  std::cout << "MouseEnObjeto: " << this->MouseEnObjeto << std::endl;
   if( this->MouseEnObjeto )
     glColor3f( 0.2f, 0.5f, 0.8f );
   else
@@ -289,7 +288,6 @@ _cb_passive_mouse_motion( int x, int y )
   unsigned char c[ 3 ];
   int y_gl = this->Height - 1 - y;
   glReadPixels( x, y_gl, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, c );
-  std::cout << "R=" << int(c[0]) << " G=" << int(c[1]) << " B=" << int(c[2]) << std::endl;
   this->MouseEnObjeto = ( c[ 0 ] != 0 || c[ 1 ] != 0 || c[ 2 ] != 0 );
   glutPostRedisplay( );
 }

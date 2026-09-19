@@ -44,22 +44,13 @@ MouseButtonEvent( int button, int state, int x, int y )
     middlePressed = true;
     this->_Reset( );
   } else middlePressed = false;
-
-/*
-  static float rad = std::atan(float(1)) / float(45);
-  static float speed = 0.005;
-
-  yaw += diffX * speed;
   
-  std::cout << yaw << std::endl;
-
-  Eye[0] = std::cos(yaw * rad); // la multiplicacion convierte el angulo a radianes
-  Eye[2] = std::sin(yaw * rad);
-  
-  lastX = x;
-  lastY = y;
-*/
-
+  // mover la camara en el eje z usando la ruedita
+  if (button == 04 || button == 03) {
+    float step = 1;
+    this->DeltaRadius += step * (button == 04 ? -1 : 1);
+    this->_Update();
+  }
 }
 
 // -------------------------------------------------------------------------
@@ -117,7 +108,7 @@ void pujOpenGL::MouseTrackballCamera::
 Draw( ) const
 {
   glMultMatrixf( this->Transform.data( ) );
-  /* std::cout << "on draw within keyboard camera" << std::endl; */
+  /* std:: << "on draw within keyboard camera" << std::endl; */
 }
 
 // -------------------------------------------------------------------------
