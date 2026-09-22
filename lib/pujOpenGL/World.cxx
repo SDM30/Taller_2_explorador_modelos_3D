@@ -296,9 +296,9 @@ _cb_passive_mouse_motion( int x, int y )
 void pujOpenGL::World::
 _cb_entry( int state )
 {
-  const char* message = state == GLUT_ENTERED ? "entering window" : "leaving window";
-  std:: cout << "[ENTRY_CALLBACK]:" << message << std::endl;  
-
+  if (this->Camera.first != nullptr) {
+    this->Camera.first->MouseEntryEvent(state);
+  }
 }
 
 // ------------------------------------------------------------------------

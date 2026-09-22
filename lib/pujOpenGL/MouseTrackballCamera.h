@@ -16,6 +16,7 @@ namespace pujOpenGL {
     virtual void ConfigureFromBounds(const float* b) override;
     virtual void MouseButtonEvent(int button, int state, int x, int y) override;
     virtual void MouseMotionEvent( int x, int y) override;
+    virtual void MouseEntryEvent(int state) override;
     virtual void Draw( ) const override;
 
   protected:

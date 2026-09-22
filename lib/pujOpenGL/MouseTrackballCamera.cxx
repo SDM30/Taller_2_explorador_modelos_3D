@@ -56,14 +56,7 @@ MouseButtonEvent( int button, int state, int x, int y )
 // -------------------------------------------------------------------------
 void pujOpenGL::MouseTrackballCamera::
 MouseMotionEvent( int x, int y )
-{
-  if (neverEnteredMouse) {
-    this->lastX = x;
-    this->lastY = y;
-    neverEnteredMouse = false;
-    return;
-  }
-  
+{ 
   float diffx = this->lastX - x;
   float diffy = this->lastY - y;
   float sens = 0.005;  
@@ -100,6 +93,17 @@ MouseMotionEvent( int x, int y )
     }
     this->lastX = x;
     this->lastY = y;
+  }
+}
+
+// ----------------------------------------------------------
+
+void pujOpenGL::MouseTrackballCamera::MouseEntryEvent(int state) {
+  if (!neverEnteredMouse && state != GLUT_ENTERED) {
+    // si sale de la ventana, reseteamos los valores por defecto :)
+    this->lastX = 0;
+    this->lastY = 0;
+    neverEnteredMouse = true;
   }
 }
 

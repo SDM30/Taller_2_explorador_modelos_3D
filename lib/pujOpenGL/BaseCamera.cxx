@@ -116,6 +116,12 @@ MouseMotionEvent( int x, int y)
   // Do nothing
 }
 
+// ----------------------------------------------------
+
+void pujOpenGL::BaseCamera::MouseEntryEvent(int state) {
+  // Do nothing
+}
+
 // -------------------------------------------------------------------------
 void pujOpenGL::BaseCamera::
 Draw( ) const
